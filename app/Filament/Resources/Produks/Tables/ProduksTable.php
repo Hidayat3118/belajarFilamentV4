@@ -6,6 +6,7 @@ use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
+use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
@@ -16,12 +17,17 @@ class ProduksTable
     {
         return $table
             ->columns([
-                TextColumn::make('nama'),
-                TextColumn::make('deskripsi_produk'),
-                TextColumn::make('harga_produk'),
+                TextColumn::make('nama')
+                ->searchable()
+                ->sortable(),
+                TextColumn::make('deskripsi_produk')
+                ->sortable(),
+                TextColumn::make('harga_produk')
+                ->sortable(),
             ])
             ->filters([
-                //
+                Filter::make('harga di atas_5000')
+                ->query(fn($query) => $query->where('harga_produk', '>', 5000))
             ])
             ->recordActions([
                 ViewAction::make(),

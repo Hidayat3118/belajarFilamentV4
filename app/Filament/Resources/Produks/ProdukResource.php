@@ -24,6 +24,10 @@ class ProdukResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nama';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['deskripsi_produk', 'harga_produk'];
+    }
     public static function form(Schema $schema): Schema
     {
         return ProdukForm::configure($schema);
